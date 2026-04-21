@@ -7,7 +7,7 @@ import { MdEmail } from "react-icons/md";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { HiArrowLongRight } from "react-icons/hi2";
 // Asset Import
-import loginImg from "../assets/login.jpg"; 
+
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -33,7 +33,7 @@ export default function Login() {
         {/* Left Side: Visual Image */}
         <div className="relative hidden lg:block ">
           <img 
-            src={loginImg} 
+            src="https://res.cloudinary.com/doujmzgn3/image/upload/v1776772174/sara-dubler-Koei_7yYtIo-unsplash_ukfd06.jpg"
             alt="Luxury Villa" 
             className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 hover:scale-110"
           />

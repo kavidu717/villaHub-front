@@ -5,7 +5,7 @@ import { HiMail, HiPhone, HiLocationMarker, HiGlobe } from "react-icons/hi";
 
 export default function Footer() {
   return (
-    <footer id="contact" className="bg-slate-900 text-slate-300 border-t border-slate-800 pt-16 pb-8">
+    <footer id="contact" className="bg-blue-700 text-slate-300 border-t border-slate-800 pt-16 pb-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
           
@@ -54,7 +54,7 @@ export default function Footer() {
               </li>
               <li className="flex items-center space-x-3 group">
                 <HiPhone size={20} className="text-primary" />
-                <span className="group-hover:text-white transition-colors">+94 77 000 1122</span>
+                <span className="group-hover:text-white transition-colors">+94 77 300 5419</span>
               </li>
               <li className="flex items-center space-x-3 group">
                 <HiMail size={20} className="text-primary" />

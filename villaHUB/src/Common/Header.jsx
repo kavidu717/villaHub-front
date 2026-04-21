@@ -10,7 +10,10 @@ export default function Header() {
   const closeMenu = () => setIsOpen(false);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur">
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-slate-200 bg-blue-100 backdrop-blur">
+      <div className="bg-blue-600">
+        <p className="capitalize p-2 text-center font-bold">lets meet in the morning</p>
+      </div>
       <div className="mx-auto flex h-20 w-full max-w-7xl items-center justify-between px-4 sm:px-6">
         <Link to="/" onClick={closeMenu} className="flex items-center gap-3">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-teal-600 text-white">
