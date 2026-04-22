@@ -12,6 +12,7 @@ import ProtectedRoute from './Components/ProtectedRoute';
 import AdminDashboard from './Pages/Admin/AdminDashboard';
 import AdminVillas from './Pages/Admin/AdminVillas';
 import AdminUsers from './Pages/Admin/AdminUsers';
+import AddVilla from './Pages/Admin/AddVilla';
 
 
 
@@ -39,6 +40,7 @@ function App() {
   <Route index element={<AdminDashboard />} />
   <Route path="villas" element={<AdminVillas />} />
   <Route path="users" element={<AdminUsers />} />
+  <Route path="add-villa" element={<AddVilla />} />
 </Route>
 
    </Routes>

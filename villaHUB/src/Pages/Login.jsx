@@ -18,9 +18,9 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await login(email, password);
+      const data = await login(email, password);
       toast.success("Welcome back to StayEase!");
-      navigate("/");
+      navigate(data.user?.role === "admin" ? "/admin" : "/", { replace: true });
     } catch (err) {
       toast.error(err.response?.data?.message || "Login failed. Please check your credentials.");
     }
