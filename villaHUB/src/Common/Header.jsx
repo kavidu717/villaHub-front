@@ -75,15 +75,15 @@ export default function Header() {
       {isOpen && (
         <div className="border-t border-slate-200 bg-white md:hidden">
           <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-5 sm:px-6">
-            <a href="#featured" onClick={closeMenu} className="text-sm font-medium text-slate-700">
-              Featured
-            </a>
-            <a href="#benefits" onClick={closeMenu} className="text-sm font-medium text-slate-700">
-              Benefits
-            </a>
-            <a href="#contact" onClick={closeMenu} className="text-sm font-medium text-slate-700">
+            <Link to="/" onClick={closeMenu} className="text-sm font-medium text-slate-700">
+              Home
+            </Link>
+            <Link to="/villas" onClick={closeMenu} className="text-sm font-medium text-slate-700">
+              Villas
+            </Link>
+            <Link to="/contact" onClick={closeMenu} className="text-sm font-medium text-slate-700">
               Contact
-            </a>
+            </Link>
 
             {user ? (
               <>
