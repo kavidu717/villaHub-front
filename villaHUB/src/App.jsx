@@ -13,6 +13,7 @@ import AdminDashboard from './Pages/Admin/AdminDashboard';
 import AdminVillas from './Pages/Admin/AdminVillas';
 import AdminUsers from './Pages/Admin/AdminUsers';
 import AddVilla from './Pages/Admin/AddVilla';
+import Contact from './Pages/Contact';
 
 
 
@@ -27,7 +28,8 @@ function App() {
     <Route index element={<Home />} />
     <Route path="login" element={<Login />} />
     <Route path="register" element={<Register />} /> 
-    <Route path="verify/:token" element={<VerifyEmail />} />    
+    <Route path="verify/:token" element={<VerifyEmail />} /> 
+    <Route path="contact" element={<Contact />} />
 
     
     </Route>

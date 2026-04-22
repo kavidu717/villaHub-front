@@ -26,15 +26,15 @@ export default function Header() {
         </Link>
 
         <nav className="hidden items-center gap-8 md:flex">
-          <a href="#featured" className="text-sm font-medium text-slate-600 transition hover:text-slate-900">
-            Featured
-          </a>
-          <a href="#benefits" className="text-sm font-medium text-slate-600 transition hover:text-slate-900">
-            Benefits
-          </a>
-          <a href="#contact" className="text-sm font-medium text-slate-600 transition hover:text-slate-900">
+          <Link to="/" className="text-sm font-medium text-slate-600 transition hover:text-slate-900">
+            Home
+          </Link>
+          <Link to="/villas" className="text-sm font-medium text-slate-600 transition hover:text-slate-900">
+            Villas
+          </Link>
+          <Link to="/contact" className="text-sm font-medium text-slate-600 transition hover:text-slate-900">
             Contact
-          </a>
+          </Link>
 
           {user ? (
             <div className="flex items-center gap-3">
