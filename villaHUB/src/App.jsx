@@ -7,6 +7,13 @@ import Home from './Pages/Home';
 import Login from './Pages/Login';
 import Register from './Pages/Register';
 import VerifyEmail from './Pages/VerifyEmail';
+import AdminLayout from './Layout/AdminLayout';
+import ProtectedRoute from './Components/ProtectedRoute';
+import AdminDashboard from './Pages/Admin/AdminDashboard';
+import AdminVillas from './Pages/Admin/AdminVillas';
+import AdminUsers from './Pages/Admin/AdminUsers';
+
+
 
 function App() {
  
@@ -23,6 +30,17 @@ function App() {
 
     
     </Route>
+
+<Route path="/admin" element={
+  <ProtectedRoute>
+    <AdminLayout />
+  </ProtectedRoute>
+}>
+  <Route index element={<AdminDashboard />} />
+  <Route path="villas" element={<AdminVillas />} />
+  <Route path="users" element={<AdminUsers />} />
+</Route>
+
    </Routes>
 
   
