@@ -74,7 +74,7 @@ export default function AddVilla() {
       <div className="mx-auto max-w-5xl">
         
         {/* Header Section */}
-        <div className="mb-6 overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-sm sm:mb-8">
+        <div className="mb-6 overflow-hidden border border-slate-200 bg-white shadow-sm sm:mb-8">
           <div className="grid gap-0 lg:grid-cols-[1.15fr_0.85fr]">
             <div className="border-b border-slate-200 px-5 py-6 text-center sm:px-8 sm:py-8 lg:border-b-0 lg:border-r lg:text-left">
               <div className="inline-flex items-center space-x-2 rounded-full bg-teal-50 px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-teal-700">
@@ -105,7 +105,7 @@ export default function AddVilla() {
         <form onSubmit={handleSubmit} className="space-y-6">
           
           {/* Section 1: Essentials */}
-          <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-7 md:p-8">
+          <section className=" border border-slate-200 bg-white p-5 shadow-sm sm:p-7 md:p-8">
             <div className="mb-6">
               <h2 className="text-sm font-bold uppercase tracking-widest text-slate-400 flex items-center gap-2">
                <HiOutlineHome className="text-teal-600 text-lg" /> Property Essentials
@@ -160,7 +160,7 @@ export default function AddVilla() {
           </section>
 
           {/* Section 2: Specs */}
-          <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-7 md:p-8">
+          <section className=" border border-slate-200 bg-white p-5 shadow-sm sm:p-7 md:p-8">
             <div className="mb-6">
               <h2 className="text-sm font-bold uppercase tracking-widest text-slate-400 flex items-center gap-2">
                <HiOutlineUserGroup className="text-teal-600 text-lg" /> Specs & Capacity
@@ -193,7 +193,7 @@ export default function AddVilla() {
           </section>
 
           {/* Section 3: Amenities (Manual layout) */}
-          <section className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-7 md:p-8">
+          <section className=" border border-slate-200 bg-white p-5 shadow-sm sm:p-7 md:p-8">
             <div className="mb-6">
               <h3 className="text-sm font-bold uppercase tracking-widest text-slate-400">Villa Amenities</h3>
               <p className="mt-2 text-sm text-slate-500">Select the features available in this property.</p>
@@ -252,10 +252,10 @@ export default function AddVilla() {
           </section>
 
           {/* Section 4: Media & Pricing */}
-          <section className="grid grid-cols-1 gap-6 rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm sm:p-7 md:grid-cols-2 md:gap-8 md:p-8">
+          <section className="grid grid-cols-1 gap-6 border border-slate-200 bg-white p-5 shadow-sm sm:p-7 md:grid-cols-2 md:gap-8 md:p-8">
             <div>
               <label className="block text-sm font-bold text-slate-700 mb-4">Villa Photo</label>
-              <div className="relative rounded-[2rem] border-2 border-dashed border-slate-200 p-6 text-center transition-colors cursor-pointer group hover:bg-slate-50 sm:p-8">
+              <div className="relative border-2 border-dashed border-slate-200 p-6 text-center transition-colors cursor-pointer group hover:bg-slate-50 sm:p-8">
                 <input
                   type="file"
                   onChange={(e)=> setPhotoes(e.target.files?.[0] || null)}
