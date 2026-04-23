@@ -1,4 +1,9 @@
+import { useNavigate } from "react-router-dom";
+
 export default function VillaCard({ villa }) {
+
+     const navigate=useNavigate();
+
   return (
     <div className="w-full sm:max-w-sm overflow-hidden shadow-lg bg-white rounded-xl mt-10">
 
@@ -27,7 +32,7 @@ export default function VillaCard({ villa }) {
             ${villa.pricePerNight}/night
           </h3>
 
-          <button className="bg-green-600 text-white px-3 sm:px-4 py-2 text-sm sm:text-base rounded-lg hover:bg-yellow-500 transition whitespace-nowrap">
+          <button onClick={() => navigate(`/villa/${villa._id}`)} className="bg-green-600 text-white px-3 sm:px-4 py-2 text-sm sm:text-base rounded-lg hover:bg-yellow-500 transition whitespace-nowrap">
             Get More
           </button>
         </div>

@@ -15,6 +15,7 @@ import AdminUsers from './Pages/Admin/AdminUsers';
 import AddVilla from './Pages/Admin/AddVilla';
 import Contact from './Pages/Contact';
 import Villas from './Pages/Villas';
+import VillaDetails from './Components/VillaDetails';
 
 
 
@@ -32,6 +33,7 @@ function App() {
     <Route path="verify/:token" element={<VerifyEmail />} /> 
     <Route path="contact" element={<Contact />} />
      <Route path="villas" element={<Villas />} />
+     <Route path="villa/:id" element={<VillaDetails />} />
     
 
     
