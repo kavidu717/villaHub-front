@@ -12,23 +12,45 @@ import { useNavigate } from "react-router-dom";
 export default function VillaDetails() {
   const { id } = useParams();
   const [villa, setVilla] = useState(null);
+  const [error, setError] = useState(null);
   const [checkIn, setCheckIn] = useState(null);
   const [checkOut, setCheckOut] = useState(null);
-    const { addToCart } = useCart();
-    const navigate = useNavigate();
+  const { addToCart } = useCart();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchVilla = async () => {
       try {
         const res = await API.get(`/villa/${id}`);
-        setVilla(res.data.villa);
+        console.log("Fetched villa details:", res.data);
+        const villaData = res.data.data
+        setVilla(villaData);
+        setError(null);
       } catch (err) {
-        console.error("Failed to fetch villa details");
-        console.error(err);
+        console.error("Failed to fetch villa details:", err.response?.data || err.message);
+        setError(err.response?.data?.message || "Could not load villa details");
+        toast.error("Failed to load villa details");
       }
     };
     fetchVilla();
   }, [id]);
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
+        <div className="text-center">
+          <h1 className="text-3xl font-bold text-red-600 mb-4">Oops!</h1>
+          <p className="text-gray-600 mb-8">{error}</p>
+          <button
+            onClick={() => navigate("/villas")}
+            className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition"
+          >
+            Back to Villas
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   if (!villa) {
     return (
@@ -51,7 +73,8 @@ export default function VillaDetails() {
       toast.error("Please login to book this villa");
       return;
     }
-    if (!checkIn || !checkOut) return alert("Please select dates");
+    if (!checkIn || !checkOut) return
+
     
     const bookingPayload = {
       villaId: villa._id,
@@ -64,6 +87,8 @@ export default function VillaDetails() {
     
     try {
       const res = await API.post("/booking", bookingPayload);
+
+      console.log("Booking response:", res.data);
       
       const bookingData = {
         ...villa,
@@ -87,7 +112,7 @@ export default function VillaDetails() {
       <div className="max-w-7xl mx-auto px-4 pt-8">
         <div className="relative group overflow-hidden rounded-3xl shadow-2xl h-[400px] md:h-[550px]">
           <img
-            src={villa?.photos?.url || "https://images.unsplash.com/photo-1512917774080-9991f1c4c750"}
+            src={villa?.photos?.url}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
             alt="Villa"
           />
@@ -109,7 +134,7 @@ export default function VillaDetails() {
           <div>
             <div className="flex items-center gap-2 text-gray-500 mb-4">
               <FaMapMarkerAlt className="text-red-500" />
-              <span className="text-lg">{villa?.location?.city}, Sri Lanka</span>
+              <span className="text-lg">{villa?.location?.city}</span>
             </div>
             
             {/* AMENITIES BAR */}

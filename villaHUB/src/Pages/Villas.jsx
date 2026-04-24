@@ -1,22 +1,31 @@
 import { useEffect, useState } from "react";
 import API from "../api/axios.js";
 import VillaCard from "../Components/VillaCard";
+import { toast } from "react-hot-toast";
 
 export default function Villas() {
 
   const [villas, setVillas] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const fetchVillas = async () => {
     try {
+      setLoading(true);
+      setError(null);
       const res = await API.get("/villa");
 
-      setVillas(res.data.data);
+      
+      setVillas(res.data.data)
+      
+      console.log("Fetched villas:", res.data.data);
       setLoading(false);
 
     } catch (error) {
-      console.error("Error fetching villas:", error);
+      console.error("Error fetching villas:", error.response?.data || error.message);
+      setError(error.response?.data?.message || error.message || "Failed to load villas");
       setLoading(false);
+      toast.error("Could not load villas. Please try again.");
     }
   };
 
@@ -26,6 +35,23 @@ export default function Villas() {
 
   if (loading) {
     return <p className="text-center mt-8 sm:mt-10 text-sm sm:text-base">Loading villas...</p>;
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
+        <div className="text-center">
+          <h1 className="text-3xl font-bold text-red-600 mb-4">Oops! Something went wrong</h1>
+          <p className="text-gray-600 mb-8">{error}</p>
+          <button
+            onClick={fetchVillas}
+            className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -42,3 +68,4 @@ export default function Villas() {
     </div>
   );
 }
+

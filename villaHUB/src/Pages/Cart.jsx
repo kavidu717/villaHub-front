@@ -1,6 +1,6 @@
 import { useCart } from "../Context/useCart.js";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-hot-toast";
+
 import API from "../api/axios.js";
 import { FaTrash } from "react-icons/fa";
 
@@ -12,30 +12,7 @@ export default function Cart() {
     return cart.reduce((total, item) => total + (item.totalPrice || 0), 0);
   };
 
-  const handleCheckout = async () => {
-    if (cart.length === 0) {
-      toast.error("Your cart is empty");
-      return;
-    }
 
-    try {
-      // Create bookings for each item in cart
-      for (let booking of cart) {
-        await API.post("/booking/confirm", {
-          villaId: booking._id,
-          checkIn: booking.checkIn,
-          checkOut: booking.checkOut,
-          totalPrice: booking.totalPrice,
-        });
-      }
-
-      toast.success("Booking confirmed! 🎉");
-      navigate("/");
-    } catch (err) {
-      console.error(err);
-      toast.error("Checkout failed. Please try again.");
-    }
-  };
 
   if (cart.length === 0) {
     return (
@@ -131,7 +108,7 @@ export default function Cart() {
               </div>
 
               <button
-                onClick={handleCheckout}
+               
                 className="w-full bg-green-600 text-white font-bold py-4 rounded-lg hover:bg-green-700 transition shadow-lg"
               >
                 Complete Checkout
