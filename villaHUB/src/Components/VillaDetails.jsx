@@ -4,12 +4,18 @@ import API from "../api/axios.js";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { FaMapMarkerAlt, FaUsers, FaBed, FaBath, FaCheckCircle } from "react-icons/fa";
+import { toast } from "react-hot-toast";
+import { useCart } from "../Context/useCart.js";
+import { useNavigate } from "react-router-dom";
+
 
 export default function VillaDetails() {
   const { id } = useParams();
   const [villa, setVilla] = useState(null);
   const [checkIn, setCheckIn] = useState(null);
   const [checkOut, setCheckOut] = useState(null);
+    const { addToCart } = useCart();
+    const navigate = useNavigate();
 
   useEffect(() => {
     const fetchVilla = async () => {
@@ -18,6 +24,7 @@ export default function VillaDetails() {
         setVilla(res.data.villa);
       } catch (err) {
         console.error("Failed to fetch villa details");
+        console.error(err);
       }
     };
     fetchVilla();
@@ -38,17 +45,39 @@ export default function VillaDetails() {
   };
 
   const handleBooking = async () => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      toast.error("Please login to book this villa");
+      return;
+    }
     if (!checkIn || !checkOut) return alert("Please select dates");
+    
+    const bookingPayload = {
+      villaId: villa._id,
+      checkInDate: checkIn.toISOString(), // Convert to ISO string
+      checkOutDate: checkOut.toISOString(), // Convert to ISO string
+      totalPrice: calculatePrice(),
+    };
+    
+    console.log("Sending booking:", bookingPayload);
+    
     try {
-      const res = await API.post("/bookings", {
-        villaId: villa._id,
+      const res = await API.post("/booking", bookingPayload);
+      
+      const bookingData = {
+        ...villa,
         checkIn,
         checkOut,
         totalPrice: calculatePrice(),
-      });
-      alert("Booking Successful! ✨");
+      };
+
+      addToCart(bookingData);
+      toast.success("Added to cart 🛒");
+      navigate("/cart");
     } catch (err) {
-      console.error(err);
+      console.error("Booking error:", err.response?.data || err.message);
+      toast.error(err.response?.data?.message || "Booking failed. Please try again.");
     }
   };
 
@@ -173,7 +202,7 @@ export default function VillaDetails() {
             <button
               onClick={handleBooking}
               disabled={!checkIn || !checkOut}
-              className="w-full bg-yellow-400 text-black font-bold py-4 rounded-2xl mt-8 shadow-lg shadow-blue-200 hover:shadow-blue-300 active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-yellow-500 text-black font-bold py-4 mt-8 shadow-lg shadow-blue-200 hover:shadow-blue-300 active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Reserve Now
             </button>

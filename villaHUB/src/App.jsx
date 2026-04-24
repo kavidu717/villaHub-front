@@ -16,6 +16,7 @@ import AddVilla from './Pages/Admin/AddVilla';
 import Contact from './Pages/Contact';
 import Villas from './Pages/Villas';
 import VillaDetails from './Components/VillaDetails';
+import Cart from './Pages/Cart';
 
 
 
@@ -34,6 +35,7 @@ function App() {
     <Route path="contact" element={<Contact />} />
      <Route path="villas" element={<Villas />} />
      <Route path="villa/:id" element={<VillaDetails />} />
+      <Route path="cart" element={<Cart />} />
     
 
     

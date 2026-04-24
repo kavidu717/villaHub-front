@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import API from "../api/axios";
+import API from "../api/axios.js";
 import VillaCard from "../Components/VillaCard";
 
 export default function Villas() {
