@@ -4,11 +4,13 @@ import { Building2, LogOut, Menu, X } from "lucide-react";
 import { useAuth } from "../Context/auth-context";
 import { useCart } from "../Context/useCart.js";
 import { AiOutlineShopping } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const { user, logout } = useAuth();
   const { cart }=useCart();
+  const navigate = useNavigate();
 
   const closeMenu = () => setIsOpen(false);
 
@@ -109,6 +111,7 @@ export default function Header() {
                   onClick={() => {
                     logout();
                     closeMenu();
+                    navigate("/");
                   }}
                   className="rounded-lg border border-slate-200 px-4 py-3 text-left text-sm font-medium text-slate-700"
                 >
