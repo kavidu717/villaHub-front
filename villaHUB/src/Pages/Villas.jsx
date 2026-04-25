@@ -39,7 +39,7 @@ export default function Villas() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
+      <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4 max-w-7xl">
         <div className="text-center">
           <h1 className="text-3xl font-bold text-red-600 mb-4">Oops! Something went wrong</h1>
           <p className="text-gray-600 mb-8">{error}</p>
@@ -55,7 +55,7 @@ export default function Villas() {
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 px-3 sm:px-6 py-6 sm:py-8">
+    <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8 px-3 sm:px-6 py-6 sm:py-8 max-w-7xl mx-auto mt-16 ">
 
       {villas.length > 0 ? (
         villas.map((villa) => (
