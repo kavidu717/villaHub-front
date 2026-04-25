@@ -55,7 +55,7 @@ export default function CheckOut() {
 
       const payment = {
         sandbox: true,
-        merchant_id: 1235222,
+        merchant_id:1235222,
         order_id: orderId,
         items: booking.name || "Villa Booking",
         amount: parseFloat(amount).toFixed(2),

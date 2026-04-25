@@ -43,7 +43,7 @@ export default function MyBookings() {
         <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-10">
           <div>
             <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight">My Bookings</h1>
-            <p className="mt-2 text-gray-600">Manage your upcoming stays and past experiences.</p>
+            <p className="mt-2 text-gray-600">Manage your upcoming stays and past experiences.  stay with us</p>
           </div>
           <div className="mt-4 md:mt-0 bg-blue-100 text-blue-700 px-4 py-2 rounded-full text-sm font-semibold">
             {bookings.length} Total Bookings
