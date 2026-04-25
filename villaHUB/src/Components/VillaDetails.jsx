@@ -5,7 +5,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { FaMapMarkerAlt, FaUsers, FaBed, FaBath, FaCheckCircle } from "react-icons/fa";
 import { toast } from "react-hot-toast";
-import { useCart } from "../Context/useCart.js";
+
 import { useNavigate } from "react-router-dom";
 
 
@@ -15,7 +15,7 @@ export default function VillaDetails() {
   const [error, setError] = useState(null);
   const [checkIn, setCheckIn] = useState(null);
   const [checkOut, setCheckOut] = useState(null);
-  const { addToCart } = useCart();
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -89,6 +89,7 @@ export default function VillaDetails() {
       const res = await API.post("/booking", bookingPayload);
 
       console.log("Booking response:", res.data);
+      navigate("/my-bookings");
       
       const bookingData = {
         ...villa,
@@ -97,9 +98,9 @@ export default function VillaDetails() {
         totalPrice: calculatePrice(),
       };
 
-      addToCart(bookingData);
-      toast.success("Added to cart 🛒");
-      navigate("/cart");
+      toast.success("Villa booked successfully!");
+
+      
     } catch (err) {
       console.error("Booking error:", err.response?.data || err.message);
       toast.error(err.response?.data?.message || "Booking failed. Please try again.");

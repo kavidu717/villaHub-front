@@ -2,14 +2,13 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Building2, LogOut, Menu, X } from "lucide-react";
 import { useAuth } from "../Context/auth-context";
-import { useCart } from "../Context/useCart.js";
 import { AiOutlineShopping } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const { user, logout } = useAuth();
-  const { cart }=useCart();
+  
   const navigate = useNavigate();
 
   const closeMenu = () => setIsOpen(false);
@@ -44,15 +43,9 @@ export default function Header() {
           {user ? (
             <div className="flex items-center gap-3">
 
-                      <Link to="/cart" className="relative">
-                        <AiOutlineShopping size={20} />
-
-                           {cart.length > 0 && (
-                 <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-1 rounded">
-                   {cart.length}
-                </span>
-      )}
-    </Link> 
+              <Link to="/my-bookings" className="text-sm font-medium text-slate-600 transition hover:text-slate-900">
+                My Bookings
+              </Link>
 
               <div className="rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-sm text-slate-700">
                 {user.name}
@@ -100,10 +93,7 @@ export default function Header() {
             <Link to="/contact" onClick={closeMenu} className="text-sm font-medium text-slate-700">
               Contact
             </Link>
-            <Link to="/cart" onClick={closeMenu} className="text-sm font-medium text-slate-700">
-               Cart ({cart.length})
-                 </Link>
-
+            
             {user ? (
               <>
                 <div className="rounded-lg bg-slate-100 px-4 py-3 text-sm text-slate-700">{user.name}</div>
