@@ -18,6 +18,7 @@ import Villas from './Pages/Villas';
 import VillaDetails from './Components/VillaDetails';
 import MyBooking from './Components/MyBooking';
 import CheckOut from './Components/CheckOut';
+import Success from './Pages/Success';
 
 
 
@@ -39,6 +40,7 @@ function App() {
      <Route path="villa/:id" element={<VillaDetails />} />
       <Route path="my-bookings" element={<MyBooking />} />
       <Route path="checkout" element={<CheckOut />} />
+      <Route path="/success" element={<Success />} />
       
     
 

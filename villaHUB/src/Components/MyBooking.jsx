@@ -34,7 +34,7 @@ export default function MyBookings() {
   }
 
      const handleCheckOut =  (booking) => {
-           navigate("/checkout");
+           navigate("/checkout", { state: { booking } });
   }
 
   return (

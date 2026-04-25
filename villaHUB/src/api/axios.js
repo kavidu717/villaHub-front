@@ -3,7 +3,7 @@ import axios from "axios";
 
 // my backend url
 const API = axios.create({ 
-    baseURL: "https://villa-hub-8en5.vercel.app/api/v1" 
+    baseURL: "http://localhost:3000/api/v1" 
 });
 
 
