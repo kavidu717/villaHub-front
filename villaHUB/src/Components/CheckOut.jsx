@@ -70,7 +70,7 @@ export default function CheckOut() {
         country: "Sri Lanka",
         return_url: "http://localhost:5173/success",
         cancel_url: "http://localhost:5173/checkout",
-        notify_url: "https://villa-hub-8en5.vercel.app/api/v1/payment/notify",
+        notify_url: "https://villahub.onrender.com/api/v1/payment/notify",
       };
 
       window.payhere.startPayment(payment);
