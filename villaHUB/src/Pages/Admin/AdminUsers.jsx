@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import API from "../../api/axios";
 import React, { useState, useEffect } from "react";
 
@@ -14,6 +15,42 @@ export default function AdminUsers() {
       setUsers(res.data.data);
     } catch (error) {
       console.log(error);
+    }
+  };
+   
+  const handleDelete = async (id) => {
+    try {
+      await API.delete(`/auth/admin/${id}`);
+      setUsers((prev)=> prev.filter((user) => user._id !== id));
+
+      toast.success("User deleted successfully");
+
+      console.log("User deleted successfully");
+
+
+     
+    } catch (error) {
+      console.log(error);
+    }
+
+  }
+   const handleBlock = async (id) => {
+    try {
+      const res = await API.patch(`/auth/admin/block/${id}`);
+
+      // update UI instantly
+      setUsers((prev) =>
+        prev.map((user) =>
+          user._id === id
+            ? { ...user, isBlocked: !user.isBlocked }
+            : user
+        )
+      );
+
+      toast.success(res.data.message);
+    } catch (error) {
+      console.log(error);
+      toast.error("Failed to update user");
     }
   };
 
@@ -47,10 +84,10 @@ export default function AdminUsers() {
                 </td>
                 <td className="px-8 py-5">
                   <div className="flex justify-center gap-3">
-                    <button className="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-xl text-xs font-bold transition-all active:scale-95 shadow-lg shadow-amber-500/20">
+                    <button onClick={() => handleBlock(user._id)} className="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-xl text-xs font-bold transition-all active:scale-95 shadow-lg shadow-amber-500/20">
                       Block
                     </button>
-                    <button className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl text-xs font-bold transition-all active:scale-95 shadow-lg shadow-red-500/20">
+                    <button onClick={() => handleDelete(user._id)} className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl text-xs font-bold transition-all active:scale-95 shadow-lg shadow-red-500/20">
                       Delete
                     </button>
                   </div>

@@ -19,6 +19,7 @@ import VillaDetails from './Components/VillaDetails';
 import MyBooking from './Components/MyBooking';
 import CheckOut from './Components/CheckOut';
 import Success from './Pages/Success';
+import Bookings from './Pages/Admin/Bookings';
 
 
 
@@ -58,6 +59,7 @@ function App() {
   <Route path="villas" element={<AdminVillas />} />
   <Route path="users" element={<AdminUsers />} />
   <Route path="add-villa" element={<AddVilla />} />
+  <Route path="booking" element={<Bookings />} />
 </Route>
 
    </Routes>

@@ -45,6 +45,11 @@ export default function AdminLayout() {
             <span className="font-medium">User Accounts</span>
           </Link>
 
+           <Link to="/admin/booking" onClick={closeSidebar} className="flex items-center space-x-3 rounded-xl p-3 text-slate-300 transition-colors hover:bg-slate-800 hover:text-white">
+              <HiOutlineUsers size={20} />
+              <span className="font-medium">Bookings</span>
+            </Link>
+
            
         </nav>
 
@@ -81,6 +86,16 @@ export default function AdminLayout() {
               <HiOutlineUsers size={20} />
               <span className="font-medium">User Accounts</span>
             </Link>
+
+             <Link to="/admin/booking" onClick={closeSidebar} className="flex items-center space-x-3 rounded-xl p-3 text-slate-300 transition-colors hover:bg-slate-800 hover:text-white">
+              <HiOutlineUsers size={20} />
+              <span className="font-medium">Bookings</span>
+            </Link>
+        
+            
+
+
+
           </nav>
 
           <button
