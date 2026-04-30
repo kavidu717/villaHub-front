@@ -118,7 +118,7 @@ export default function Contact() {
               </p>
             </div>
 
-            <form action="" className="space-y-6">
+            <form action="" className="space-y-6" onSubmit={handleSubmit}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label className="text-sm font-bold text-slate-700 ml-1">First Name</label>
@@ -183,7 +183,7 @@ export default function Contact() {
 
               <button 
                 type="submit"
-                onClick={handleSubmit} 
+                
                 className="group w-full flex items-center justify-center gap-3 bg-slate-900 text-white font-bold py-5 rounded-2xl hover:bg-teal-600 shadow-xl shadow-slate-200 transition-all active:scale-[0.98]"
               >
                 <span>Send Message</span>
