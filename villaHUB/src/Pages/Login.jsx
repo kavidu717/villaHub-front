@@ -71,7 +71,7 @@ export default function Login() {
                   type="email"
                   required
                   placeholder="you@example.com"
-                  className="w-full rounded-2xl border border-slate-200 bg-slate-50/50 px-12 py-4 outline-none transition-all focus:bg-white focus:border-teal-600 focus:ring-4 focus:ring-teal-500/10 placeholder:text-slate-400"
+                  className="w-full  border border-slate-200 bg-slate-50/50 px-12 py-4 outline-none transition-all focus:bg-white focus:border-teal-600 focus:ring-4 focus:ring-teal-500/10 placeholder:text-slate-400"
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
@@ -93,14 +93,14 @@ export default function Login() {
                   type="password"
                   required
                   placeholder="••••••••"
-                  className="w-full rounded-2xl border border-slate-200 bg-slate-50/50 px-12 py-4 outline-none transition-all focus:bg-white focus:border-teal-600 focus:ring-4 focus:ring-teal-500/10 placeholder:text-slate-400"
+                  className="w-full  border border-slate-200 bg-slate-50/50 px-12 py-4 outline-none transition-all focus:bg-white focus:border-teal-600 focus:ring-4 focus:ring-teal-500/10 placeholder:text-slate-400"
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
             </div>
 
             {/* Submit Button */}
-            <button className="group flex w-full items-center justify-center space-x-3 rounded-2xl bg-slate-900 py-4.5 text-base font-bold text-white transition-all hover:bg-slate-800 hover:shadow-xl active:scale-[0.98] py-4">
+            <button className="group flex w-full items-center justify-center space-x-3  bg-yellow-400 py-4.5 text-base font-bold text-white transition-all hover:bg-slate-800 hover:shadow-xl active:scale-[0.98] py-4">
               <span>Secure Login</span>
               <HiArrowLongRight className="text-xl group-hover:translate-x-2 transition-transform" />
             </button>

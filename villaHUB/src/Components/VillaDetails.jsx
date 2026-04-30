@@ -108,10 +108,10 @@ export default function VillaDetails() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-20">
+    <div className="min-h-screen bg-indigo-100 pb-20">
       {/* HERO IMAGE SECTION */}
       <div className="max-w-7xl mx-auto px-4 pt-8">
-        <div className="relative group overflow-hidden rounded-3xl shadow-2xl h-[400px] md:h-[550px]">
+        <div className="relative group overflow-hidden  shadow-2xl h-[400px] md:h-[550px]">
           <img
             src={villa?.photos?.url}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
@@ -163,7 +163,7 @@ export default function VillaDetails() {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">What this place offers</h2>
+            <h2 className="text-2xl font-bold text-gray-800 mb-4 capitalize">What this place offers</h2>
             <div className="grid grid-cols-2 gap-4">
               {['Private Pool', 'Free WiFi', 'Air Conditioning', 'Kitchen', 'Free Parking', 'Ocean View'].map((item) => (
                 <div key={item} className="flex items-center gap-3 text-gray-600">
@@ -180,7 +180,7 @@ export default function VillaDetails() {
           <div className="sticky top-28 bg-white p-8 rounded-3xl shadow-xl border border-gray-100">
             <div className="flex justify-between items-center mb-6">
               <div>
-                <span className="text-3xl font-black text-gray-800">${villa.pricePerNight}</span>
+                <span className="text-3xl font-black text-gray-800">Rs.{villa.pricePerNight}.00</span>
                 <span className="text-gray-500 font-medium"> / night</span>
               </div>
             </div>
