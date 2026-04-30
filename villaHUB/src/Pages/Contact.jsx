@@ -3,6 +3,7 @@ import { MdAttachEmail } from "react-icons/md";
 import { FaAddressBook } from "react-icons/fa6";
 import { HiArrowLongRight } from "react-icons/hi2";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 export default function Contact() {
     const [firstName, setFirstName]= useState('');
@@ -22,6 +23,11 @@ export default function Contact() {
      Phone: ${phone}
 
      Message:${message}`;
+
+     if (!firstName || !lastName || !email || !phone || !message) {
+      toast.error("Please fill in all fields before submitting.");
+      return;
+    }
 
   const encodedText = encodeURIComponent(text);
 
