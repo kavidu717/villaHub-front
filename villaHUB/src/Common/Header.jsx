@@ -93,9 +93,14 @@ export default function Header() {
             <Link to="/contact" onClick={closeMenu} className="text-sm font-medium text-slate-700">
               Contact
             </Link>
+
+          
             
             {user ? (
               <>
+                <Link to="/my-bookings" onClick={closeMenu} className="text-sm font-medium text-slate-700">
+                  My Bookings
+                </Link>
                 <div className="rounded-lg bg-slate-100 px-4 py-3 text-sm text-slate-700">{user.name}</div>
                 <button
                   onClick={() => {
