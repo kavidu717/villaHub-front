@@ -2,8 +2,38 @@ import { BsFillTelephoneFill } from "react-icons/bs";
 import { MdAttachEmail } from "react-icons/md";
 import { FaAddressBook } from "react-icons/fa6";
 import { HiArrowLongRight } from "react-icons/hi2";
+import { useState } from "react";
 
 export default function Contact() {
+    const [firstName, setFirstName]= useState('');
+    const [lastName, setLastName]= useState('');
+    const [email, setEmail]= useState('');
+    const [phone, setPhone]= useState('');
+    const [message, setMessage]= useState('');
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log(firstName, lastName, email, phone, message);
+
+         const text = `Hello, I have a new inquiry:
+
+     Name: ${firstName} ${lastName}
+     Email: ${email}
+     Phone: ${phone}
+
+     Message:${message}`;
+
+  const encodedText = encodeURIComponent(text);
+
+  const whatsappNumber = "94773005419"; // 👉 your number (no +, no spaces)
+
+  const url = `https://wa.me/${whatsappNumber}?text=${encodedText}`;
+
+  window.open(url, "_blank");
+
+    }
+  
+
   return (
     <div className="min-h-screen bg-white py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
@@ -88,6 +118,9 @@ export default function Contact() {
                   <label className="text-sm font-bold text-slate-700 ml-1">First Name</label>
                   <input 
                     type="text" 
+                    required
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
                     placeholder="John" 
                     className="w-full rounded-2xl border-none bg-white px-6 py-4 shadow-sm outline-none ring-1 ring-slate-200 focus:ring-2 focus:ring-teal-500 transition-all"
                   />
@@ -96,6 +129,9 @@ export default function Contact() {
                   <label className="text-sm font-bold text-slate-700 ml-1">Last Name</label>
                   <input 
                     type="text" 
+                    required
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
                     placeholder="Doe" 
                     className="w-full rounded-2xl border-none bg-white px-6 py-4 shadow-sm outline-none ring-1 ring-slate-200 focus:ring-2 focus:ring-teal-500 transition-all"
                   />
@@ -105,7 +141,10 @@ export default function Contact() {
               <div className="space-y-2">
                 <label className="text-sm font-bold text-slate-700 ml-1">Email Address</label>
                 <input 
-                  type="email" 
+                  type="email"
+                  required 
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   placeholder="john@example.com" 
                   className="w-full rounded-2xl border-none bg-white px-6 py-4 shadow-sm outline-none ring-1 ring-slate-200 focus:ring-2 focus:ring-teal-500 transition-all"
                 />
@@ -115,6 +154,10 @@ export default function Contact() {
                 <label className="text-sm font-bold text-slate-700 ml-1">Phone Number</label>
                 <input 
                   type="text" 
+                  required
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+
                   placeholder="+94 XX XXX XXXX" 
                   className="w-full rounded-2xl border-none bg-white px-6 py-4 shadow-sm outline-none ring-1 ring-slate-200 focus:ring-2 focus:ring-teal-500 transition-all"
                 />
@@ -123,14 +166,18 @@ export default function Contact() {
               <div className="space-y-2">
                 <label className="text-sm font-bold text-slate-700 ml-1">Your Message</label>
                 <textarea 
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
                   placeholder="Tell us how we can help you..." 
+                  required
                   rows="5" 
                   className="w-full rounded-2xl border-none bg-white px-6 py-4 shadow-sm outline-none ring-1 ring-slate-200 focus:ring-2 focus:ring-teal-500 transition-all resize-none"
                 />
               </div>
 
               <button 
-                type="submit" 
+                type="submit"
+                onClick={handleSubmit} 
                 className="group w-full flex items-center justify-center gap-3 bg-slate-900 text-white font-bold py-5 rounded-2xl hover:bg-teal-600 shadow-xl shadow-slate-200 transition-all active:scale-[0.98]"
               >
                 <span>Send Message</span>
