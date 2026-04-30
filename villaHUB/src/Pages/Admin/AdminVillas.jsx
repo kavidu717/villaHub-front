@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import API from "../../api/axios.js";
 import { MdModeEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
+import { toast } from "react-hot-toast";
 
 export default function AdminVillas() {
   const [villas, setVillas] = useState([]);
@@ -18,6 +19,20 @@ export default function AdminVillas() {
       console.log(error);
     }
   };
+
+  const handleDelete = async (id) => {
+    try{
+      await API.delete(`/villa/${id}`);
+       toast.success("Villa deleted successfully");
+
+       // this is used to remove from the ui
+      setVillas(villas.filter(villa => villa._id !== id));
+    }
+    catch(error){
+      toast.error("Failed to delete villa");
+      console.log(error);
+    }
+  }
 
   return (
     <div className="p-6 bg-slate-50 min-h-screen">
@@ -42,8 +57,11 @@ export default function AdminVillas() {
                     <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2  text-md font-bold transition-all active:scale-95">
                       <MdModeEdit />
                     </button>
-                    <button className="bg-red-500 hover:bg-red-600 text-white px-4 py-2  text-md font-bold transition-all active:scale-95">
-                    <MdDelete />
+                    <button 
+                      onClick={() => handleDelete(villa._id)}
+                      className="bg-red-500 hover:bg-red-600 text-white px-4 py-2  text-md font-bold transition-all active:scale-95"
+                    >
+                      <MdDelete />
                     </button>
                   </div>
                 </td>
