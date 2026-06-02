@@ -6,6 +6,7 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
+    // 🔐 Auto login check
     useEffect(() => {
         const verifyUser = async () => {
             const token = localStorage.getItem("token");
@@ -29,20 +30,48 @@ export const AuthProvider = ({ children }) => {
         verifyUser();
     }, []);
 
+    // 🔑 Normal Login
     const login = async (email, password) => {
-        const { data } = await API.post("/auth/login", { email, password });
-        localStorage.setItem('token', data.token);
+        const { data } = await API.post("/auth/login", {
+            email,
+            password,
+        });
+
+        localStorage.setItem("token", data.token);
         setUser(data.user);
+
         return data;
     };
 
+    // 🌐 Google Login (NEW)
+    const googleLogin = async (credential) => {
+        const { data } = await API.post("/auth/google", {
+            credential,
+        });
+
+        localStorage.setItem("token", data.token);
+        setUser(data.user);
+
+        return data;
+    };
+
+    // 🚪 Logout
     const logout = () => {
-        localStorage.removeItem('token');
+        localStorage.removeItem("token");
         setUser(null);
     };
 
     return (
-        <AuthContext.Provider value={{ user, setUser, login, logout, loading }}>
+        <AuthContext.Provider
+            value={{
+                user,
+                setUser,
+                login,
+                googleLogin, // ✅ added
+                logout,
+                loading,
+            }}
+        >
             {children}
         </AuthContext.Provider>
     );
