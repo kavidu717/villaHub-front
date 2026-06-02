@@ -20,6 +20,7 @@ import MyBooking from './Components/MyBooking';
 import CheckOut from './Components/CheckOut';
 import Success from './Pages/Success';
 import Bookings from './Pages/Admin/Bookings';
+import Profile from './Pages/Profile';
 
 
 
@@ -43,6 +44,8 @@ function App() {
       <Route path="my-bookings" element={<MyBooking />} />
       <Route path="checkout" element={<CheckOut />} />
       <Route path="success" element={<Success />} />
+      <Route path="profile" element={<Profile />} />
+       
      
       
     
