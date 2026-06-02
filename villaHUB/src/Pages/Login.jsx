@@ -100,7 +100,7 @@ export default function Login() {
             </div>
 
             {/* Submit Button */}
-            <button className="group flex w-full items-center justify-center space-x-3  bg-yellow-400 py-4.5 text-base font-bold text-white transition-all hover:bg-slate-800 hover:shadow-xl active:scale-[0.98] py-4">
+            <button className="group flex w-full items-center justify-center space-x-3  bg-blue-400 py-4.5 text-base font-bold text-white transition-all hover:bg-slate-800 hover:shadow-xl active:scale-[0.98] py-4">
               <span>Secure Login</span>
               <HiArrowLongRight className="text-xl group-hover:translate-x-2 transition-transform" />
             </button>

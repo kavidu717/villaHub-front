@@ -4,6 +4,7 @@ import { toast } from "react-hot-toast";
 import API from "../api/axios";
 import { GoogleLogin } from "@react-oauth/google";
 import { useAuth } from "../Context/auth-context";
+import { FiUser, FiMail, FiLock, FiArrowRight } from "react-icons/fi"; // ✅ Imported Icons
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -11,6 +12,7 @@ export default function Register() {
     email: "",
     password: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
   const { googleLogin } = useAuth();
@@ -18,13 +20,16 @@ export default function Register() {
   // 🧾 Normal Register
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
     try {
       const res = await API.post("/auth/register", formData);
-      toast.success(res.data.message);
+      toast.success(res.data.message || "Account created successfully!");
       navigate("/login");
     } catch (err) {
       toast.error(err.response?.data?.message || "Registration failed");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -32,80 +37,131 @@ export default function Register() {
   const handleGoogleSuccess = async (response) => {
     try {
       await googleLogin(response.credential);
-      toast.success("Google Login Success");
+      toast.success("Welcome to VillaHub!");
       navigate("/");
     } catch (err) {
-
       toast.error("Google Login Failed");
       console.log(err);
     }
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-200 px-4 py-12">
-      <div className="mx-auto grid max-w-6xl w-full grid-cols-1 overflow-hidden bg-white shadow-2xl shadow-slate-200/60 lg:grid-cols-[1fr_1.2fr]">
+    <div className="flex min-h-screen items-center justify-center bg-slate-50 px-4 py-12 sm:px-6 lg:px-8">
+      
+      {/* Main Container */}
+      <div className="mx-auto flex w-full max-w-5xl flex-col overflow-hidden rounded-3xl bg-white shadow-xl shadow-slate-200/60 lg:flex-row">
 
-        {/* Image */}
-        <div className="relative hidden lg:block">
+        {/* Left Side: Image Banner */}
+        <div className="relative hidden w-full lg:block lg:w-5/12">
           <img
             src="https://res.cloudinary.com/doujmzgn3/image/upload/v1777525745/kelsey-curtis--27u_GzlAFw-unsplash_k3v8rr.jpg"
-            alt="Villa"
+            alt="Luxury Villa"
             className="h-full w-full object-cover"
           />
-          <div className="absolute inset-0 bg-teal-900/10" />
+          <div className="absolute inset-0 bg-gradient-to-t from-blue-900/80 via-blue-900/20 to-transparent"></div>
+          
+          <div className="absolute bottom-0 left-0 p-10 text-white">
+            <h2 className="text-3xl font-bold tracking-tight">Your perfect getaway awaits.</h2>
+            <p className="mt-3 text-blue-100">Join thousands of travelers finding their dream vacation homes every day.</p>
+          </div>
         </div>
 
-        {/* Form */}
-        <div className="flex flex-col justify-center p-10 md:p-16 lg:p-20">
-
-          <div className="mb-10 text-center md:text-left">
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-teal-600">
+        {/* Right Side: Form */}
+        <div className="flex w-full flex-col justify-center p-8 sm:p-12 lg:w-7/12 lg:p-16">
+          
+          <div className="mb-10 text-center lg:text-left">
+            <p className="mb-2 text-sm font-bold uppercase tracking-widest text-blue-600">
               Join VillaHub
             </p>
-            <h1 className="mt-2 text-4xl font-extrabold tracking-tight text-slate-900 md:text-5xl">
-              Create Account
+            <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+              Create an Account
             </h1>
+            <p className="mt-2 text-slate-500">
+              Sign up to start booking your luxury stays.
+            </p>
           </div>
 
-          {/* FORM */}
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-5">
+            
+            {/* Name Input with Icon */}
+            <div>
+              <label className="mb-1.5 block text-sm font-medium text-slate-700">Full Name</label>
+              <div className="relative">
+                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
+                  <FiUser className="h-5 w-5 text-slate-400" />
+                </div>
+                <input
+                  type="text"
+                  required
+                  placeholder="John Doe"
+                  className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3.5 pl-11 pr-4 text-slate-900 transition-all outline-none focus:border-blue-600 focus:bg-white focus:ring-2 focus:ring-blue-600/20"
+                  onChange={(e) =>
+                    setFormData({ ...formData, name: e.target.value })
+                  }
+                />
+              </div>
+            </div>
 
-            <input
-              type="text"
-              placeholder="Full Name"
-              className="w-full bg-slate-100 px-6 py-4"
-              onChange={(e) =>
-                setFormData({ ...formData, name: e.target.value })
-              }
-            />
+            {/* Email Input with Icon */}
+            <div>
+              <label className="mb-1.5 block text-sm font-medium text-slate-700">Email Address</label>
+              <div className="relative">
+                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
+                  <FiMail className="h-5 w-5 text-slate-400" />
+                </div>
+                <input
+                  type="email"
+                  required
+                  placeholder="hello@example.com"
+                  className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3.5 pl-11 pr-4 text-slate-900 transition-all outline-none focus:border-blue-600 focus:bg-white focus:ring-2 focus:ring-blue-600/20"
+                  onChange={(e) =>
+                    setFormData({ ...formData, email: e.target.value })
+                  }
+                />
+              </div>
+            </div>
 
-            <input
-              type="email"
-              placeholder="Email"
-              className="w-full bg-slate-100 px-6 py-4"
-              onChange={(e) =>
-                setFormData({ ...formData, email: e.target.value })
-              }
-            />
+            {/* Password Input with Icon */}
+            <div>
+              <label className="mb-1.5 block text-sm font-medium text-slate-700">Password</label>
+              <div className="relative">
+                <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4">
+                  <FiLock className="h-5 w-5 text-slate-400" />
+                </div>
+                <input
+                  type="password"
+                  required
+                  placeholder="••••••••"
+                  className="w-full rounded-xl border border-slate-200 bg-slate-50 py-3.5 pl-11 pr-4 text-slate-900 transition-all outline-none focus:border-blue-600 focus:bg-white focus:ring-2 focus:ring-blue-600/20"
+                  onChange={(e) =>
+                    setFormData({ ...formData, password: e.target.value })
+                  }
+                />
+              </div>
+            </div>
 
-            <input
-              type="password"
-              placeholder="Password"
-              className="w-full bg-slate-100 px-6 py-4"
-              onChange={(e) =>
-                setFormData({ ...formData, password: e.target.value })
-              }
-            />
-
-            <button className="w-full rounded-2xl bg-[#f0c733] py-5 text-lg font-bold text-white">
-              Register Account
+            {/* Submit Button */}
+            <button 
+              disabled={isLoading}
+              className={`group mt-4 flex w-full items-center justify-center rounded-xl py-4 text-base font-bold text-white shadow-sm transition-all active:scale-[0.98] ${
+                isLoading ? "bg-blue-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700 hover:shadow-md"
+              }`}
+            >
+              {isLoading ? (
+                <div className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent"></div>
+              ) : (
+                <>
+                  Create Account
+                  <FiArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                </>
+              )}
             </button>
           </form>
 
-          {/* OR */}
-          <div className="my-6 flex items-center gap-4">
+          {/* Divider */}
+          <div className="my-8 flex items-center gap-4">
             <div className="h-px flex-1 bg-slate-200"></div>
-            <span className="text-sm text-slate-400">OR</span>
+            <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">OR CONTINUE WITH</span>
             <div className="h-px flex-1 bg-slate-200"></div>
           </div>
 
@@ -114,21 +170,22 @@ export default function Register() {
             <GoogleLogin
               onSuccess={handleGoogleSuccess}
               onError={() => toast.error("Google Login Failed")}
+              theme="outline"
+              size="large"
+              shape="pill"
             />
           </div>
 
           {/* LOGIN LINK */}
-          <div className="mt-10 border-t border-slate-100 pt-8 text-center">
-            <p className="text-slate-500">
-              Already have an account?{" "}
-              <Link
-                to="/login"
-                className="font-bold text-teal-600 hover:text-teal-700"
-              >
-                Login here
-              </Link>
-            </p>
-          </div>
+          <p className="mt-10 text-center text-sm font-medium text-slate-500">
+            Already have an account?{" "}
+            <Link
+              to="/login"
+              className="font-bold text-blue-600 transition-colors hover:text-blue-700 hover:underline"
+            >
+              Sign in here
+            </Link>
+          </p>
 
         </div>
       </div>
