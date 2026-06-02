@@ -3,10 +3,10 @@ import axios from "axios";
 
 // my backend url
 const API = axios.create({ 
-  // baseURL: "https://villahub.onrender.com/api/v1" 
+   baseURL: "https://villahub.onrender.com/api/v1" 
 
    // for the testiong purpose
-    baseURL: "http://localhost:3000/api/v1"
+   // baseURL: "http://localhost:3000/api/v1"
 });
 
 
