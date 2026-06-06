@@ -1,13 +1,10 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import API from "../api/axios.js";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { FaMapMarkerAlt, FaUsers, FaBed, FaBath, FaCheckCircle } from "react-icons/fa";
 import { toast } from "react-hot-toast";
-
-import { useNavigate } from "react-router-dom";
-
 
 export default function VillaDetails() {
   const { id } = useParams();
@@ -15,24 +12,55 @@ export default function VillaDetails() {
   const [error, setError] = useState(null);
   const [checkIn, setCheckIn] = useState(null);
   const [checkOut, setCheckOut] = useState(null);
+  const [bookedDates, setBookedDates] = useState([]);
 
   const navigate = useNavigate();
+
+  const getDatesInRange = (startDate, endDate) => {
+    const start = new Date(startDate);
+    start.setHours(0, 0, 0, 0); 
+    const end = new Date(endDate);
+    end.setHours(0, 0, 0, 0);
+    const date = new Date(start.getTime());
+    const dates = [];
+
+    while (date <= end) {
+      dates.push(new Date(date));
+      date.setDate(date.getDate() + 1);
+    }
+    return dates;
+  };
 
   useEffect(() => {
     const fetchVilla = async () => {
       try {
         const res = await API.get(`/villa/${id}`);
-        console.log("Fetched villa details:", res.data);
-        const villaData = res.data.data
-        setVilla(villaData);
+        setVilla(res.data.data);
         setError(null);
       } catch (err) {
-        console.error("Failed to fetch villa details:", err.response?.data || err.message);
         setError(err.response?.data?.message || "Could not load villa details");
         toast.error("Failed to load villa details");
       }
     };
+
+    const fetchBookings = async () => {
+      try {
+        const res = await API.get(`/booking/villa/${id}/bookings`);
+        if (res.data.success) {
+          let disabledDates = [];
+          res.data.data.forEach((booking) => {
+            const datesInRange = getDatesInRange(booking.checkInDate, booking.checkOutDate);
+            disabledDates = [...disabledDates, ...datesInRange];
+          });
+          setBookedDates(disabledDates);
+        }
+      } catch (err) {
+        console.error("Failed to fetch bookings:", err);
+      }
+    };
+
     fetchVilla();
+    fetchBookings();
   }, [id]);
 
   if (error) {
@@ -73,36 +101,20 @@ export default function VillaDetails() {
       toast.error("Please login to book this villa");
       return;
     }
-    if (!checkIn || !checkOut) return
+    if (!checkIn || !checkOut) return;
 
-    
     const bookingPayload = {
       villaId: villa._id,
-      checkInDate: checkIn.toISOString(), // Convert to ISO string
-      checkOutDate: checkOut.toISOString(), // Convert to ISO string
+      checkInDate: checkIn.toISOString(),
+      checkOutDate: checkOut.toISOString(),
       totalPrice: calculatePrice(),
     };
     
-    console.log("Sending booking:", bookingPayload);
-    
     try {
-      const res = await API.post("/booking", bookingPayload);
-
-      console.log("Booking response:", res.data);
-      navigate("/my-bookings");
-      
-      const bookingData = {
-        ...villa,
-        checkIn,
-        checkOut,
-        totalPrice: calculatePrice(),
-      };
-
+      await API.post("/booking", bookingPayload);
       toast.success("Villa booked successfully!");
-
-      
+      navigate("/my-bookings");
     } catch (err) {
-      console.error("Booking error:", err.response?.data || err.message);
       toast.error(err.response?.data?.message || "Booking failed. Please try again.");
     }
   };
@@ -111,7 +123,7 @@ export default function VillaDetails() {
     <div className="min-h-screen bg-indigo-100 pb-20">
       {/* HERO IMAGE SECTION */}
       <div className="max-w-7xl mx-auto px-4 pt-8">
-        <div className="relative group overflow-hidden  shadow-2xl h-[400px] md:h-[550px]">
+        <div className="relative group overflow-hidden shadow-2xl h-[400px] md:h-[550px]">
           <img
             src={villa?.photos?.url}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
@@ -173,9 +185,101 @@ export default function VillaDetails() {
               ))}
             </div>
           </section>
+
+          {/* --- CSS STYLE BLOCK (ONLY AFFECTS THE BIG CALENDAR) --- */}
+          <style>{`
+            .modern-calendar-wrapper {
+              background: linear-gradient(145deg, #ffffff, #f8fafc);
+              box-shadow: 0 10px 30px -10px rgba(0,0,0,0.05);
+            }
+            .modern-calendar-wrapper .react-datepicker {
+              width: 100%;
+              border: none;
+              font-family: inherit;
+              display: flex;
+              justify-content: center;
+              background: transparent;
+            }
+            .modern-calendar-wrapper .react-datepicker__month-container {
+              width: 100%;
+            }
+            .modern-calendar-wrapper .react-datepicker__header {
+              background-color: transparent;
+              border-bottom: 2px dashed #e2e8f0;
+              padding-top: 1.5rem;
+              padding-bottom: 1rem;
+            }
+            .modern-calendar-wrapper .react-datepicker__current-month {
+              font-size: 1.75rem;
+              font-weight: 800;
+              color: #1f2937;
+              margin-bottom: 1rem;
+            }
+            .modern-calendar-wrapper .react-datepicker__day-name {
+              color: #9ca3af;
+              font-weight: 700;
+              font-size: 0.875rem;
+              text-transform: uppercase;
+              width: 2.5rem;
+              margin: 0.2rem;
+            }
+            .modern-calendar-wrapper .react-datepicker__day {
+              width: 2.5rem;
+              line-height: 2.5rem;
+              font-size: 1.1rem;
+              font-weight: 600;
+              color: #374151;
+              margin: 0.2rem;
+              border-radius: 12px;
+              transition: all 0.2s;
+            }
+            @media (min-width: 768px) {
+              .modern-calendar-wrapper .react-datepicker__day-name, 
+              .modern-calendar-wrapper .react-datepicker__day {
+                width: 3.5rem;
+                line-height: 3.5rem;
+                font-size: 1.25rem;
+                margin: 0.3rem;
+              }
+            }
+            .modern-calendar-wrapper .react-datepicker__day:not(.react-datepicker__day--disabled):not(.react-datepicker__day--excluded):hover {
+              background-color: #eff6ff;
+              color: #2563eb;
+              transform: scale(1.1);
+            }
+            .modern-calendar-wrapper .react-datepicker__day--today {
+              background-color: #f3f4f6;
+              border: 2px solid #d1d5db;
+            }
+            .modern-calendar-wrapper .react-datepicker__day--excluded {
+              background-color: #fee2e2 !important;
+              color: #ef4444 !important;
+              text-decoration: line-through;
+              text-decoration-thickness: 2px;
+              opacity: 0.8 !important;
+              cursor: not-allowed;
+            }
+            .modern-calendar-wrapper .react-datepicker__day--disabled:not(.react-datepicker__day--excluded) {
+              color: #d1d5db;
+              font-weight: 400;
+            }
+          `}</style>
+
+          {/* --- BIG AVAILABILITY CALENDAR --- */}
+          <div className="mt-12 pt-10 border-t border-gray-300">
+            <h3 className="text-2xl font-bold text-gray-800 mb-6">Availability Calendar</h3>
+            <div className="modern-calendar-wrapper rounded-3xl border border-gray-200 p-6 md:p-10 flex justify-center w-full">
+              <DatePicker
+                inline={true}
+                readOnly={true}
+                minDate={new Date()}
+                excludeDates={bookedDates}
+              />
+            </div>
+          </div>
         </div>
 
-        {/* RIGHT COLUMN: STICKY BOOKING CARD */}
+        {/* RIGHT COLUMN: STICKY BOOKING CARD (ORIGINAL TAILWIND CODE) */}
         <div className="relative">
           <div className="sticky top-28 bg-white p-8 rounded-3xl shadow-xl border border-gray-100">
             <div className="flex justify-between items-center mb-6">
@@ -192,6 +296,8 @@ export default function VillaDetails() {
                   selected={checkIn}
                   onChange={(date) => setCheckIn(date)}
                   placeholderText="Add date"
+                  minDate={new Date()}
+                  excludeDates={bookedDates}
                   className="w-full border border-gray-200 p-3 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all cursor-pointer bg-gray-50 hover:bg-red"
                 />
               </div>
@@ -202,6 +308,8 @@ export default function VillaDetails() {
                   selected={checkOut}
                   onChange={(date) => setCheckOut(date)}
                   placeholderText="Add date"
+                  minDate={checkIn || new Date()}
+                  excludeDates={bookedDates}
                   className="w-full border border-gray-200 p-3 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition-all cursor-pointer bg-gray-50 hover:bg-white"
                 />
               </div>
@@ -211,16 +319,16 @@ export default function VillaDetails() {
             {calculatePrice() > 0 && (
               <div className="mt-6 pt-6 border-t border-gray-100 space-y-3">
                 <div className="flex justify-between text-gray-600">
-                  <span>${villa.pricePerNight} x {Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24))} nights</span>
-                  <span>${calculatePrice()}</span>
+                  <span>Rs.{villa.pricePerNight} x {Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24))} nights</span>
+                  <span>Rs.{calculatePrice()}</span>
                 </div>
                 <div className="flex justify-between text-gray-600">
                   <span>Service fee</span>
-                  <span>$0</span>
+                  <span>Rs.0</span>
                 </div>
                 <div className="flex justify-between text-xl font-bold text-gray-800 pt-3 border-t">
                   <span>Total</span>
-                  <span>${calculatePrice()}</span>
+                  <span>Rs.{calculatePrice()}</span>
                 </div>
               </div>
             )}
@@ -232,7 +340,7 @@ export default function VillaDetails() {
             >
               Reserve Now
             </button>
-            <p className="text-center text-gray-400 text-xs mt-4 italic">You won't be charged yet</p>
+            <p className="text-center text-gray-400 text-xs mt-4 italic mb-6">You won't be charged yet</p>
           </div>
         </div>
 
